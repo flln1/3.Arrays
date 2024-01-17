@@ -1,1 +1,39 @@
-
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> brute(int arr[], int n, int k) {
+    vector<int> temp;
+    for(int i=0; i<n; i++) {
+        for(int j=i+1; j<n; j++) {
+            if(arr[i]+arr[j]==k) {
+                temp.push_back(i);
+                temp.push_back(j);
+                return temp;
+            }
+        }
+    }
+    return {-1, -1};
+}
+vector<int> optimal(int arr[], int n, int k) {
+    vector<int> temp;
+    unordered_map<int, int> mpp;
+    for(int i=0; i<n; i++) {
+        if(mpp.find(k-arr[i]) !=mpp.end()) {
+            temp.push_back(mpp[k-arr[i]]);
+            temp.push_back(i);
+            return temp;
+        }
+        mpp[arr[i]]=i;
+    }
+    return {-1, -1};
+}
+int main() {
+    int arr[]={2,3,0,1,9};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int target=10;
+    vector<int> b=brute(arr, n, target);
+    vector<int> o=optimal(arr, n, target);
+    for(auto & it: b) cout << it << " ";
+    cout << endl;
+    for(auto & it: o) cout << it << " ";
+    return 0;
+}

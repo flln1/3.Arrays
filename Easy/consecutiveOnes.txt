@@ -1,0 +1,20 @@
+#include <bits/stdc++.h>
+using namespace std;
+int brute(int arr[], int n) {
+    int best=0;
+    int count=0;
+    for(int i=0; i<n; i++) {
+        if(arr[i]==1) {
+            count++;
+            best=max(best, count);
+        }
+        else count=0;
+    }
+    return best;
+}
+int main() {
+    int arr[]={1,0,0,1,1,1,0,1,1};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    cout << brute(arr, n);
+    return 0;
+}

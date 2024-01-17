@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+int optimal(int arr[], int n, int target) {
+    int i=0, j=0, sum=arr[0], maxLen=0;
+    while(i<n) {
+        while(i>j && sum>target) {
+            sum-=arr[j];
+            j++;
+        }
+        if(sum==target) maxLen=max(maxLen, i-j+1);
+        i++;
+        if(i<n) sum+=arr[i];
+    }
+    return maxLen;
+}
+int main() {
+    int arr[]={2,3,5,1,9};
+    int n=sizeof(arr)/sizeof(arr[0]);
+    int target=10;
+    cout << optimal(arr, n, target);
+    return 0;
+}

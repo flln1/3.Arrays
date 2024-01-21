@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+void brute(int arr[], int n) {
+    next_permutation(arr, arr+n);
+    for(int i=0; i<n; i++) cout << arr[i] << " ";
+    cout << endl;
+}
+void better(int index, int n, vector<int> & arr, vector<vector<int>> & ans) {
+    if(index==n) {
+        ans.push_back(arr); 
+        return;
+    }
+    for(int i=index; i<n; i++) {
+        swap(arr[index], arr[i]);
+        better(index+1, n, arr, ans);
+        swap(arr[index], arr[i]);
+    }
+}
+void optimal(vector<int> & arr, int n) {
+    int index=-1;                   //find breakpoint
+    for(int i=n-2; i>=0; i--) {
+        if(arr[i]<arr[i+1]) {
+            index=i;
+            break;
+        }
+    }
+    if(index==-1) reverse(arr.begin(), arr.end()); //if breakpoint doesn't exist reverse array
+    else {
+        for(int i=n-1; i>index; i--) {  //find next greater element and swap with arr[index]
+            if(arr[i]>arr[index]) {
+                swap(arr[i], arr[index]);
+                break;
+            }
+        }
+        reverse(arr.begin()+index+1, arr.end());   //reverse right half of array
+    }
+    for(auto & it:arr) cout << it << " ";
+}
+int main() {
+    vector<int> arr={3,1,2};
+    int n=arr.size();
+    vector<vector<int>> ans;
+    int arrr[]={3,1,2};
+    brute(arrr, n);
+    better(0, n, arr, ans);
+    for(int i=0; i<ans.size(); i++) {
+        if(ans[i]==arr) {
+            for(auto & it:ans[i+1]) cout << it << " ";
+        }
+    }
+    cout << endl;
+    optimal(arr, n);
+    return 0;
+}

@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+int b_nCr(int n, int r) {
+    int fact=1;
+    for(int i=0; i< r; i++) {
+        fact*=(n-i);
+        fact/=(i+1);
+    }
+    return fact;
+}
+vector<int> o_nCr(int i) {
+    long long ans=1;
+    vector<int> row;
+    row.push_back(1);
+    for(int j=1; j<i; j++) {
+        ans=ans*(i-j);
+        ans=ans/j;
+        row.push_back(ans);
+    }
+    return row;
+}
+void brute(int n) {
+    for(int i=0; i<n; i++) {
+        for(int j=n-i-1; j>0; j--) {
+            cout << " ";
+        }
+        for(int j=0; j<=i; j++) {
+            cout << b_nCr(i, j) << " ";
+        }
+        cout << endl;
+    }
+}
+void optimal(int n) {
+    vector<vector<int>> ans;
+    for(int i=1; i<=n; i++) {
+        ans.push_back(o_nCr(i));
+    }
+    int index=0;
+    for(auto & it:ans) {
+        int i=n-index-1;
+        while(i>0) {
+            cout << " ";
+            i--;
+        }
+        for(auto ele:it) cout << ele << " ";
+        index++;
+        cout << endl;
+    }
+}
+int main() {
+    int n=5; 
+    brute(n);
+    optimal(n);
+}
